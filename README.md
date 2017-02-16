@@ -1,4 +1,5 @@
-# 맛집지도
+# 맛집 지도
+https://yoon-gu.github.io/gourmet
 ## 사용방법
 1. 열기 `requested_places.csv`
 1. `상호명`,`업종`,`주소`,`링크`,`주차`를 입력한다
