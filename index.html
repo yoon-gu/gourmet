@@ -108,7 +108,7 @@ function ready(error, kor, stations) {
       .attr("cy", function(d) { return projection([d.lon, d.lat])[1]; })
       .attr("r", 3)
       .attr("opacity", 0.7)
-      .attr("class", function(d){ return "no_l_" + d.no_line; })
+      .attr("class", function(d){ return d.type; })
       .on("mouseover", function(d){
         tooltip.style("visibility", "visible")
         .text(d.name);
