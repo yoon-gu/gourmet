@@ -30,7 +30,7 @@ for idx, row in df.iterrows():
 		item = {"name" : name, "lat" : lat, "lon" : lon, "type" : row['업종'] }
 		info.append(item)
 		done_df.loc[done_df_len + idx] = df.loc[idx]
-		df = df.drop(df.index[[idx]])
+		df = df.drop(df.index[[0]])
 	else:
 		print("Error Code:" + rescode)
 pprint(info)
