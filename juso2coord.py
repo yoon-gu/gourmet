@@ -33,5 +33,7 @@ for idx, row in df.iterrows():
 	else:
 		print("Error Code:" + rescode)
 pprint(info)
-pd.DataFrame(info).to_csv('data.csv', encoding='utf8', index=False)
+old = pd.read_csv('data.csv')
+new = pd.DataFrame(info)
+old.append(new).to_csv('data.csv', encoding='utf8', index=False)
 df.to_csv('requested_places.csv', encoding='utf8', index=False)
