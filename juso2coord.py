@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 import urllib.request, json, csv
 import pandas as pd
 from pprint import pprint
@@ -12,6 +10,8 @@ qeury_args = {'query' : '서울 마포구 노고산동 31-11',
 
 info = []
 df = pd.read_csv('requested_places.csv')
+done_df = pd.read_csv('done_places.csv')
+done_df_len = len(done_df)
 for idx, row in df.iterrows():
 	encText = urllib.parse.quote(row['주소'])
 	url = "https://openapi.naver.com/v1/map/geocode?query=" + encText
@@ -29,6 +29,7 @@ for idx, row in df.iterrows():
 		lon = dic['result']['items'][0]['point']['x']
 		item = {"name" : name, "lat" : lat, "lon" : lon, "type" : row['업종'] }
 		info.append(item)
+		done_df.loc[done_df_len + idx] = df.loc[idx]
 		df = df.drop(df.index[[idx]])
 	else:
 		print("Error Code:" + rescode)
@@ -37,3 +38,4 @@ old = pd.read_csv('data.csv')
 new = pd.DataFrame(info)
 old.append(new).to_csv('data.csv', encoding='utf8', index=False)
 df.to_csv('requested_places.csv', encoding='utf8', index=False)
+done_df.to_csv('done_places.csv', encoding='utf8', index=False)
