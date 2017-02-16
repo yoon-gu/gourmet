@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import urllib, urllib2, json, csv
+import urllib.request, json, csv
 import pandas as pd
 from pprint import pprint
 
@@ -11,15 +11,17 @@ qeury_args = {'query' : '서울 마포구 노고산동 31-11',
 			  'output':'json'}
 
 info = []
-df = pd.read_csv('database.csv')
+df = pd.read_csv('requested_places.csv')
 for index, row in df.iterrows():
-	qeury_args['query'] = row['주소']
-	url = 'https://openapi.naver.com/v1/map/geocode?' + urllib.urlencode(qeury_args)
-	req = urllib2.Request(url)
-	req.add_header("X-Naver-Client-Id",client_id)
-	req.add_header("X-Naver-Client-Secret",client_secret)
-	resp = urllib2.urlopen(req)
-	content = resp.read()
+	encText = urllib.parse.quote(row['주소'])
+	url = "https://openapi.naver.com/v1/map/geocode?query=" + encText
+	request = urllib.request.Request(url)
+	request.add_header("X-Naver-Client-Id",client_id)
+	request.add_header("X-Naver-Client-Secret",client_secret)
+	response = urllib.request.urlopen(request)
+	rescode = response.getcode()
+	response_body = response.read()
+	content = response_body.decode('utf-8')
 	dic = json.loads(content)
 	name = row['상호명']
 	lat = dic['result']['items'][0]['point']['y']
