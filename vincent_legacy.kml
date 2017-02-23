@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<kml xmlns='http://www.opengis.net/kml/2.2'>
+<kml>
 	<Document>
 		<name>식도락 지도</name>
 		<description><![CDATA[written by Woogyung Kim (17 Jan 2017)  ]]></description>
