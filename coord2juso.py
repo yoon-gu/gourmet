@@ -12,6 +12,7 @@ import xml.etree.ElementTree
 tree = xml.etree.ElementTree.parse('vincent_legacy.kml')
 root = tree.getroot()
 
+info = []
 for place in tree.findall('.//Placemark'):
 	name = place.find('name').text
 	coord = place.find('Point/coordinates').text
@@ -36,6 +37,14 @@ for place in tree.findall('.//Placemark'):
 			dic = json.loads(content)
 			for j in range(0, len(dic['result']['items'])):
 				address = dic['result']['items'][j]['address']
+			lon, lat, _ = coord.split(',')
+			item = {"name" : name[3:].strip(), "lat" : lat, "lon" : lon, "type" : place_type }
+			info.append(item)
+			
 			print(place_type, name[3:].strip(), address, coord, stars)
 		else:
 			print("Error!")
+
+old = pd.read_csv('data.csv')
+new = pd.DataFrame(info)
+old.append(new).to_csv('data.csv', encoding='utf8', index=False)
